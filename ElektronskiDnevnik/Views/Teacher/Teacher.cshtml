@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CassandraDataLayer.QueryEntities.Student>
+
+@{
+    ViewBag.Title = "Teacher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Welcome on teacher page</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Teacher", new { id = item.studentID , sectionID = item.sectionID}, null) |
+                @Html.ActionLink("Details", "Details","Teacher", new { id = item.studentID , sectionID = item.sectionID}, null) |
+                @Html.ActionLink("Delete", "Delete","Teacher", new { id = item.studentID , sectionID = item.sectionID}, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
