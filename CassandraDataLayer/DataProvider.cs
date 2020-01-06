@@ -244,7 +244,7 @@ namespace CassandraDataLayer
             if (session == null)
                 return null;
 
-            var studentsData = session.Execute("select * from \"Student\" where \"teacherID\" = '"+teacherID+"' allow filtering");
+            var studentsData = session.Execute("select * from \"Student\" where \"teacherID\" = '" + teacherID + "' allow filtering");
 
 
             foreach (var studentData in studentsData)
@@ -331,11 +331,75 @@ namespace CassandraDataLayer
 
         }
 
+        public static void EditStudent(Student s)
+        {
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+                return;
+
+            SortedDictionary<string, string> tmp = s.grades;
+            string g = "";
+            string keyy = "";
+            string val = "";
+            bool counter = true;
+            foreach (var grade in tmp)
+            {
+                keyy = grade.Key;
+                val = grade.Value;
+                if (counter)
+                {
+                    g += "'" + keyy + "':'" + val + "'";
+                    counter = false;
+                }
+                g += ", '" + keyy + "':'" + val + "'";
+            }
+
+            session.Execute("update \"Student\" set name='" + s.name + "', surname='" + s.surname + "', email= '" + s.email + "', password='" + s.password + "', grades = {" + g + "} where \"studentID\"='" + s.studentID + "' and \"sectionID\"='" + s.sectionID + "' and \"teacherID\" = '" + s.teacherID + "'");
+
+        }
+
+        public static void AddSubject(Student s)
+        {
+            ISession session = SessionManager.GetSession();
+
+            if (session == null)
+                return;
+            string g = "";
+            if (s.grades != null)
+            {
+                SortedDictionary<string, string> tmp = s.grades;
+
+                string keyy = "";
+                string val = "";
+                bool counter = true;
+
+                foreach (var grade in tmp)
+                {
+                    keyy = grade.Key;
+                    val = grade.Value;
+                    if (counter)
+                    {
+                        g += "'" + keyy + "':'" + val + "'";
+                        counter = false;
+                    }
+                    g += ", '" + keyy + "':'" + val + "'";
+                }
+                g += ", '" + s.subject + "':'" + s.grade + "'";
+            }
+            else
+            {
+                g += "'" + s.subject + "':'" + s.grade + "'";
+            }
+            session.Execute("update \"Student\" set grades = {" + g + "} where \"studentID\"='" + s.studentID + "' and \"sectionID\"='" + s.sectionID + "' and \"teacherID\" = '" + s.teacherID + "'");
+
+        }
+
         #endregion
 
         #region Section
 
-        public static Section GetSection(string resID)
+        public static Section GetSection(string name, string teacherID, string schoolID)
         {
             ISession session = SessionManager.GetSession();
             Section section = new Section();
@@ -343,11 +407,11 @@ namespace CassandraDataLayer
             if (session == null)
                 return null;
 
-            Row sectionData = session.Execute("select * from \"Section\" where \"resID\"='" + resID + "'").FirstOrDefault();
+            Row sectionData = session.Execute("select * from \"Section\" where \"name\"='" + name + "' and \"teacherID\" = '" + teacherID + "' and \"schoolID\" = '" + schoolID + "'").FirstOrDefault();
 
             if (sectionData != null)
             {
-                section.sectionID = sectionData["sectionID"] != null ? sectionData["sectionID"].ToString() : string.Empty;
+                section.schoolID = sectionData["schoolID"] != null ? sectionData["schoolID"].ToString() : string.Empty;
                 section.teacherID = sectionData["teacherID"] != null ? sectionData["teacherID"].ToString() : string.Empty;
                 section.num_stud = sectionData["num_stud"] != null ? Int32.Parse(sectionData["num_stud"].ToString()) : 0;
                 section.name = sectionData["name"] != null ? sectionData["name"].ToString() : string.Empty;
@@ -370,7 +434,7 @@ namespace CassandraDataLayer
             foreach (Row sectionData in sectionsData)
             {
                 Section section = new Section();
-                section.sectionID = sectionData["sectionID"] != null ? sectionData["sectionID"].ToString() : string.Empty;
+                section.schoolID = sectionData["schoolID"] != null ? sectionData["schoolID"].ToString() : string.Empty;
                 section.teacherID = sectionData["teacherID"] != null ? sectionData["teacherID"].ToString() : string.Empty;
                 section.num_stud = sectionData["num_stud"] != null ? Int32.Parse(sectionData["num_stud"].ToString()) : 0;
                 section.name = sectionData["name"] != null ? sectionData["name"].ToString() : string.Empty;
@@ -382,7 +446,7 @@ namespace CassandraDataLayer
             return sections;
         }
 
-        public static void IncreaseNumStud(Student s)
+        public static void ChangeNumStud(string sectionID, string teacherID, string schoolID, int param)
         {
             ISession session = SessionManager.GetSession();
 
@@ -390,13 +454,13 @@ namespace CassandraDataLayer
                 return;
 
             int numStud = 0;
-            var sectionsData = session.Execute("select * from \"Section\" where \"sectionID\"='" + s.sectionID + "' and \"teacherID\" = '" + s.teacherID + "'");
+            var sectionsData = session.Execute("select * from \"Section\" where \"name\"='" + sectionID + "' and \"teacherID\" = '" + teacherID + "' and \"schoolID\" = '" + schoolID + "'");
             foreach (Row sectionData in sectionsData)
             {
-                numStud = sectionData["num_stud"] != null ? (Int32.Parse(sectionData["num_stud"].ToString())+1) : 0;
+                numStud = sectionData["num_stud"] != null ? (Int32.Parse(sectionData["num_stud"].ToString()) + param) : 0;
             }
 
-            session.Execute("update \"Section\" set num_stud=" + numStud + " where \"sectionID\"='" + s.sectionID + "' and \"teacherID\" = '" + s.teacherID + "'");
+            session.Execute("update \"Section\" set num_stud=" + numStud + " where \"name\"='" + sectionID + "' and \"teacherID\" = '" + teacherID + "' and \"schoolID\" = '" + schoolID + "'");
         }
 
         public static void AddSection(Section s)
@@ -406,21 +470,22 @@ namespace CassandraDataLayer
             if (session == null)
                 return;
 
-            RowSet sectionData = session.Execute("insert into \"Section\"(\"sectionID\", \"teacherID\", num_stud,  name) " +
-                "values ('" + s.sectionID + "', '" + s.teacherID + "', '" + s.num_stud + "', '" + s.name + "')");
+            RowSet sectionData = session.Execute("insert into \"Section\"(\"schoolID\", \"teacherID\", num_stud,  \"name\") " +
+                "values ('" + s.schoolID + "', '" + s.teacherID + "', '" + s.num_stud + "', '" + s.name + "')");
 
         }
 
-        public static void DeleteSection(string sectionID, string teacherID)
+        public static void DeleteSection(string sectionID, string teacherID, string schoolID)
         {
             ISession session = SessionManager.GetSession();
 
             if (session == null)
                 return;
 
-            RowSet sectionData = session.Execute("delete from \"Section\" where \"sectionID\" = '" + sectionID + "' and \"teacherID\" = '" + teacherID + "'");
+            RowSet sectionData = session.Execute("delete from \"Section\" where \"sectionID\" = '" + sectionID + "' and \"teacherID\" = '" + teacherID + "'  and \"schoolID\" = '" + schoolID + "'");
 
         }
+
 
         #endregion
 

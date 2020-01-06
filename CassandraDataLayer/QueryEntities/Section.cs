@@ -8,7 +8,7 @@ namespace CassandraDataLayer.QueryEntities
 {
     public class Section
     {
-        public string sectionID { get; set; }
+        public string schoolID { get; set; }
         public string teacherID { get; set; }
         public int num_stud { get; set; }
         public string name { get; set; }

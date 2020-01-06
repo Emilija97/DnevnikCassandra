@@ -18,5 +18,8 @@ namespace CassandraDataLayer.QueryEntities
         public string userID { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
+        public string schoolID { get; set; }
+        public string sectionID { get; set; }
+        public string teacherID { get; set; }
     }
 }

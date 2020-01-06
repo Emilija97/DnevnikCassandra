@@ -17,7 +17,6 @@ namespace CassandraDataLayer.QueryEntities
         [Required(ErrorMessage = "Teacher ID is required.")]
         public string teacherID { get; set; }
 
-        
         public string name { get; set; }
 
         [Required(ErrorMessage = "Surname is required.")]
@@ -28,9 +27,12 @@ namespace CassandraDataLayer.QueryEntities
         public string email { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
-        [DataType(DataType.Password)]
+        //[DataType(DataType.Password)]
         public string password { get; set; }
 
         public SortedDictionary<string, string> grades { get; set; }
+
+        public string subject { get; set; }
+        public string grade { get; set; }
     }
 }

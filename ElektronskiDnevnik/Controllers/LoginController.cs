@@ -34,6 +34,7 @@ namespace ElektronskiDnevnik.Controllers
                     u.userID = teacher.teacherID;
                     u.name = teacher.name;
                     u.surname = teacher.surname;
+                    u.schoolID = teacher.schoolID;
                     CassandraDataLayer.Store.GetInstance().SetUser(u);
                     return Redirect("/Teacher/Teacher");
                 }
@@ -41,9 +42,11 @@ namespace ElektronskiDnevnik.Controllers
                 {
                     //u.userID = CassandraDataLayer.DataProvider.GetStudentID(u.email, u.password);
                     Student student = CassandraDataLayer.DataProvider.GetStudentByEmail(u.email, u.password);
-                    u.userID = student.teacherID;
+                    u.userID = student.studentID;
                     u.name = student.name;
                     u.surname = student.surname;
+                    u.sectionID = student.sectionID;
+                    u.teacherID = student.teacherID;
                     CassandraDataLayer.Store.GetInstance().SetUser(u);
                     return Redirect("~/Home");
                 }

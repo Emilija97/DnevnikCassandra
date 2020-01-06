@@ -26,22 +26,24 @@ namespace ElektronskiDnevnik.Controllers
         {
             var teacherID = CassandraDataLayer.Store.GetInstance().loggedUser.userID;
             Student student = CassandraDataLayer.DataProvider.GetStudent(id, sectionID, teacherID);
-            return Redirect("/Teacher/Edit");
+            TempData["myStudent"] = student;
+            return RedirectToAction("Index", "Edit");
         }
 
-        public ActionResult Details(string id, string sectionID)
+        public ActionResult AddSubject(string id, string sectionID)
         {
-            var students = new List<Student>();
             var teacherID = CassandraDataLayer.Store.GetInstance().loggedUser.userID;
-            students = CassandraDataLayer.DataProvider.GetStudents(teacherID);
-            return View(students);
+            Student student = CassandraDataLayer.DataProvider.GetStudent(id, sectionID, teacherID);
+            TempData["myStudent"] = student;
+            return RedirectToAction("Index", "AddSubject");
         }
 
         public ActionResult Delete(string id, string sectionID)
         {
-            var teacherID = CassandraDataLayer.Store.GetInstance().loggedUser.userID;
-            CassandraDataLayer.DataProvider.DeleteStudent(id, sectionID, teacherID);
-            return View();
+            User u = CassandraDataLayer.Store.GetInstance().GetUser();
+            CassandraDataLayer.DataProvider.DeleteStudent(id, sectionID, u.userID);
+            CassandraDataLayer.DataProvider.ChangeNumStud(sectionID, u.userID, u.schoolID, -1);
+            return RedirectToAction("Teacher", "Teacher");
         }
     }
 }

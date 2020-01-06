@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CassandraDataLayer.QueryEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,8 +24,10 @@ namespace ElektronskiDnevnik.Controllers
         public ActionResult RegisterStudent(CassandraDataLayer.QueryEntities.Student s)
         {
             s.studentID = Guid.NewGuid().ToString("N");
+            User u = CassandraDataLayer.Store.GetInstance().GetUser();
+            s.teacherID = u.userID;
             CassandraDataLayer.DataProvider.AddStudent(s);
-            CassandraDataLayer.DataProvider.IncreaseNumStud(s);
+            CassandraDataLayer.DataProvider.ChangeNumStud(s.sectionID,u.userID, u.schoolID, 1);
             //CassandraDataLayer.DataProvider.GetStudents();
             return View();
 

@@ -34,12 +34,12 @@
                 @Html.DisplayFor(modelItem => item.email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", "Teacher", new { id = item.studentID , sectionID = item.sectionID}, null) |
-                @Html.ActionLink("Details", "Details","Teacher", new { id = item.studentID , sectionID = item.sectionID}, null) |
-                @Html.ActionLink("Delete", "Delete","Teacher", new { id = item.studentID , sectionID = item.sectionID}, null)
+                @Html.ActionLink("Edit", "Edit", "Teacher", new { id = item.studentID, sectionID = item.sectionID }, null) |
+                @Html.ActionLink("Add subject", "AddSubject", "Teacher", new { id = item.studentID, sectionID = item.sectionID }, null) |
+                @Html.ActionLink("Delete", "Delete", "Teacher", new { id = item.studentID, sectionID = item.sectionID }, null)
             </td>
         </tr>
     }
-
 </table>
+@Html.ActionLink("Register New Student", "RegisterStudent", "Register", new { area = "" }, null)
 
