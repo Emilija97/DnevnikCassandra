@@ -1,0 +1,81 @@
+﻿@model CassandraDataLayer.QueryEntities.Student
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Student page</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Name")
+        </th>
+        <th>
+            @Html.DisplayName("Surname")
+        </th>
+        <th>
+            @Html.DisplayName("Email")
+        </th>
+        <th style="visibility:hidden;">
+            @Html.DisplayNameFor(model => model.studentID)
+        </th>
+        <th style="visibility:hidden;">
+            @Html.DisplayNameFor(model => model.sectionID)
+        </th>
+        <th style="visibility:hidden;">
+            @Html.DisplayNameFor(model => model.teacherID)
+            </thstyle="visibility:hidden;">
+        <th style="visibility:hidden;">
+            @Html.DisplayNameFor(model => model.password)
+        </th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.surname)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.email)
+        </td>
+        <td style="visibility:hidden;">
+            @Html.DisplayFor(model => model.studentID)
+        </td>
+        <td style="visibility:hidden;">
+            @Html.DisplayFor(model => model.sectionID)
+        </td>
+        <td style="visibility:hidden;">
+            @Html.DisplayFor(model => model.teacherID)
+        </td>
+        <td style="visibility:hidden;">
+            @Html.DisplayFor(model => model.password)
+        </td>
+    </tr>
+</table>
+<div>
+    <h2>Grades</h2>
+</div>
+<table class="table table-bordered table-responsive table-hover">
+    <tr>
+        <th>
+            @Html.DisplayName("Subjects")
+        </th>
+        <th>
+            @Html.DisplayName("Grades")
+        </th>
+    </tr>
+    @foreach (var item in Model.grades)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Key)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.grades[item.Key])
+            </td>
+        </tr>
+    }
+</table>
