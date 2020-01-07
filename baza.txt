@@ -1,0 +1,187 @@
+CREATE TABLE "School" (
+	"schoolID" text,
+	name text,
+	phone text,
+	email text,
+	city text,
+	address text,
+	zip int,
+	PRIMARY KEY("schoolID")
+);
+CREATE TABLE "Teacher" (
+	"schoolID" text,
+	"teacherID" text,
+	name text,
+	surname text,
+	phone text,
+	email text,
+	password text,
+	PRIMARY KEY("teacherID", "schoolID")
+);
+CREATE TABLE "Student" (
+   	"studentID" text,
+   	"sectionID" text,
+   	"teacherID" text,
+   	name text,
+   	surname text,
+   	email text,
+   	password text,
+   	grades map<text, text>,
+    	PRIMARY KEY("studentID", "sectionID", "teacherID")
+);
+CREATE TABLE "Section" (
+	"name" text,
+	"teacherID" text,
+	"schoolID" text,
+	num_stud varint,
+	PRIMARY KEY("name", "teacherID","schoolID")
+);
+---------SCHOOLS-------------
+insert into "School"("schoolID", name, phone, email, city, address, zip)  values ('school1', 'Gimnazija Stevan Sremac', '018/735-412','gss@gmail.com', 'Nis', 'Ulica Vozda Karadjordja', 18000);
+insert into "School"("schoolID", name, phone, email, city, address, zip)  values ('school2', 'Gimnazija Svetozar Markovic', '018/618-129','gsm@gmail.com', 'Nis', 'Ulica Branka Radicevica', 18000);
+---------TEACHERS-------------
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '1', 'Emilija','Tomovic', '018/789-654', 'emilija@gmail.com', 'emili');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '2', 'Petra','Petrovic', '018/789-654', 'petra@gmail.com', 'pet');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '3', 'Brankica','Brankic', '018/789-654', 'branka@gmail.com', 'bran');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '4', 'Marko','Maric', '018/789-654', 'marko@gmail.com', 'mar');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '5', 'Nikola','Nikolic', '018/789-654', 'nikola@gmail.com', 'niko');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '6', 'Bogdan','Bogdanovic', '018/789-654', 'bogdan@gmail.com', 'bogd');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '7', 'Stefan','Stefanovic', '018/789-654', 'stefan@gmail.com', 'stef');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '8', 'Rada','Radic', '018/789-654', 'rada@gmail.com', 'ra');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '9', 'Vera','Veric', '018/789-654', 'vera@gmail.com', 've');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '10', 'Petar','Peric', '018/789-654', 'petar@gmail.com', 'pet');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '11', 'Mitar','Mitrovic', '018/789-654', 'mitar@gmail.com', 'mit');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '12', 'Milan','Milanovic', '018/789-654', 'milan@gmail.com', 'mil');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '13', 'Dimitrije','Dimic', '018/789-654', 'dimitrije@gmail.com', 'dimitri');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '14', 'Sandra','Sandric', '018/789-654', 'sandra@gmail.com', 'sand');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '15', 'Ivana','Ivanovic', '018/789-654', 'ivana@gmail.com', 'iva');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '16', 'Jelena','Jelic', '018/789-654', 'jelena@gmail.com', 'jele');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '17', 'Saska','Saskic', '018/789-654', 'saska@gmail.com', 'sas');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '18', 'Jovan','Jovanovic', '018/789-654', 'jovan@gmail.com', 'jov');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '19', 'Stanko','Stanic', '018/789-654', 'stanko@gmail.com', 'stan');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '20', 'Emili','Tomovic', '018/789-654', 'emili@gmail.com', 'emi');
+---------SECTIONS-------------
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-1','1','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-2','2','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-3','3','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-4','4','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-5','5','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-1','6','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-2','7','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-3','8','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-4','9','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-5','10','school1',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-1','11','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-2','12','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-3','13','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-4','14','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-5','15','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-1','16','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-2','17','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-3','18','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-4','19','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-5','20','school2',4);
+---------STUDENTS-------------
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('1','I-1', '1', 'Ana', 'Anic','anaa@gmail.com', 'a', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('2','I-1', '1', 'Filip', 'Filipovic','filip@gmail.com', 'fil', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('3','I-1', '1', 'Helena', 'Helenic','helena@gmail.com', 'hele', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('4','I-1', '1', 'David', 'Davic','david@gmail.com', 'dav', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('5','I-2', '2', 'Ivana', 'Ivanic','ivana@gmail.com', 'iva', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('6','I-2', '2', 'Elena', 'Elic','elena@gmail.com', 'ele', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('7','I-2', '2', 'Teodora', 'Teic','teodora@gmail.com', 'teodo', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('8','I-2', '2', 'Ema', 'Emic','ema@gmail.com', 'e', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('9','I-3', '3', 'Dunja', 'Dunjic','dunja@gmail.com', 'dun', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('10','I-3', '3','Una', 'Unic','una@gmail.com', 'u', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('11','I-3', '3','Ivona', 'Ivic','ivona@gmail.com', 'ivo', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('12','I-3', '3','Emilija', 'Kremica','emilija@gmail.com', 'emili', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('13','I-4', '4','Matej', 'Matejic','matej@gmail.com', 'mat', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('14','I-4', '4','Lara', 'Laric','lara@gmail.com', 'la', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('15','I-4', '4','Leon', 'Leonic','leon@gmail.com', 'le', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('16','I-4', '4','Sergej', 'Sergic','sergej@gmail.com', 'serg', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('17','I-5', '5','Lazar', 'Lazic','lazar@gmail.com', 'laz', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('18','I-5', '5','Strahinja', 'Strahinjic','strahinja@gmail.com', 'strahin', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('19','I-5', '5','Tamara', 'Tamaric','tamara@gmail.com', 'tama', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('20','I-5', '5','Miona', 'Minic','miona@gmail.com', 'mio', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('21','II-1', '6','Dragan', 'Dragic','dragan@gmail.com', 'drag', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('22','II-1', '6','Jana', 'Janic','jana@gmail.com', 'ja', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('23','II-1', '6','Milos', 'Milosic','milos@gmail.com', 'mil', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('24','II-1', '6','Nenad', 'Nedic','nenad@gmail.com', 'nen', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('25','II-2', '7','Bojan', 'Bojic','bojan@gmail.com', 'boj', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('26','II-2', '7','Vukasin', 'Vukic','vukasin@gmail.com', 'vukas', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('27','II-2', '7','Martin', 'Maric','martin@gmail.com', 'mart', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('28','II-2', '7','Sava', 'Savanovic','sava@gmail.com', 'sa', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('29','II-3', '8','Anja', 'Anjic','anja@gmail.com', 'an', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('30','II-3', '8','Pavle', 'Pavlic','pavle@gmail.com', 'pav', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('31','II-3', '8','Danijel', 'Danic','danijel@gmail.com', 'danij', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('32','II-3', '8','Eleonora', 'Elic','eleonora@gmail.com', 'eleono', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('33','II-4', '9','Viktorija', 'Vikic','viktorija@gmail.com', 'viktori', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('34','II-4', '9','Tomislav', 'Tomic','tomislav@gmail.com', 'tomisl', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('35','II-4', '9','Kristijan', 'Krstic','kristijan@gmail.com', 'kristij', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('36','II-4', '9','Jasna', 'Jasnic','emilija@gmail.com', 'emili', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('37','II-5', '10','Krasna', 'Krasnic','krasna@gmail.com', 'kras', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('38','II-5', '10','Marica', 'Maric','marica@gmail.com', 'mari', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('39','II-5', '10','Slavica', 'Slavic','slavica@gmail.com', 'slavi', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('40','II-5', '10','Milija', 'Milic','milija@gmail.com', 'mili', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('41','I-1', '11', 'Ana', 'Anic','anaa@gmail.com', 'a', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('42','I-1', '11', 'Filip', 'Filipovic','filip@gmail.com', 'fil', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('43','I-1', '11', 'Helena', 'Helenic','helena@gmail.com', 'hele', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('44','I-1', '11', 'David', 'Davic','david@gmail.com', 'dav', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('45','I-2', '12', 'Ivana', 'Ivanic','ivana@gmail.com', 'iva', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('46','I-2', '12', 'Elena', 'Elic','elena@gmail.com', 'ele', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('47','I-2', '12', 'Teodora', 'Teic','teodora@gmail.com', 'teodo', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('48','I-2', '12', 'Ema', 'Emic','ema@gmail.com', 'e', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('49','I-3', '13', 'Dunja', 'Dunjic','dunja@gmail.com', 'dun', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('50','I-3', '13','Una', 'Unic','una@gmail.com', 'u', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('51','I-3', '13','Ivona', 'Ivic','ivona@gmail.com', 'ivo', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('52','I-3', '13','Emilija', 'Kremica','emilija@gmail.com', 'emili', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('53','I-4', '14','Matej', 'Matejic','matej@gmail.com', 'mat', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('54','I-4', '14','Lara', 'Laric','lara@gmail.com', 'la', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('55','I-4', '14','Leon', 'Leonic','leon@gmail.com', 'le', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('56','I-4', '14','Sergej', 'Sergic','sergej@gmail.com', 'serg', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('57','I-5', '15','Lazar', 'Lazic','lazar@gmail.com', 'laz', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('58','I-5', '15','Strahinja', 'Strahinjic','strahinja@gmail.com', 'strahin', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('59','I-5', '15','Tamara', 'Tamaric','tamara@gmail.com', 'tama', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('60','I-5', '15','Miona', 'Minic','miona@gmail.com', 'mio', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('61','II-1', '16','Dragan', 'Dragic','dragan@gmail.com', 'drag', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('62','II-1', '16','Jana', 'Janic','jana@gmail.com', 'ja', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('63','II-1', '16','Milos', 'Milosic','milos@gmail.com', 'mil', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('64','II-1', '16','Nenad', 'Nedic','nenad@gmail.com', 'nen', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('65','II-2', '17','Bojan', 'Bojic','bojan@gmail.com', 'boj', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('66','II-2', '17','Vukasin', 'Vukic','vukasin@gmail.com', 'vukas', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('67','II-2', '17','Martin', 'Maric','martin@gmail.com', 'mart', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('68','II-2', '17','Sava', 'Savanovic','sava@gmail.com', 'sa', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('69','II-3', '18','Anja', 'Anjic','anja@gmail.com', 'an', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('70','II-3', '18','Pavle', 'Pavlic','pavle@gmail.com', 'pav', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('71','II-3', '18','Danijel', 'Danic','danijel@gmail.com', 'danij', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('72','II-3', '18','Eleonora', 'Elic','eleonora@gmail.com', 'eleono', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('73','II-4', '19','Viktorija', 'Vikic','viktorija@gmail.com', 'viktori', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('74','II-4', '19','Tomislav', 'Tomic','tomislav@gmail.com', 'tomisl', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('75','II-4', '19','Kristijan', 'Krstic','kristijan@gmail.com', 'kristij', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('76','II-4', '19','Jasna', 'Jasnic','emilija@gmail.com', 'emili', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('77','II-5', '20','Krasna', 'Krasnic','krasna@gmail.com', 'kras', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('78','II-5', '20','Marica', 'Maric','marica@gmail.com', 'mari', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('79','II-5', '20','Slavica', 'Slavic','slavica@gmail.com', 'slavi', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('80','II-5', '20','Milija', 'Milic','milija@gmail.com', 'mili', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
+
+
+select * from "Teacher" where "schoolID" = 'nekiId'
+delete from "Student" where "studentID"='23'
