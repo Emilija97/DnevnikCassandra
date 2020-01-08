@@ -40,7 +40,7 @@ CREATE TABLE "Section" (
 insert into "School"("schoolID", name, phone, email, city, address, zip)  values ('school1', 'Gimnazija Stevan Sremac', '018/735-412','gss@gmail.com', 'Nis', 'Ulica Vozda Karadjordja', 18000);
 insert into "School"("schoolID", name, phone, email, city, address, zip)  values ('school2', 'Gimnazija Svetozar Markovic', '018/618-129','gsm@gmail.com', 'Nis', 'Ulica Branka Radicevica', 18000);
 ---------TEACHERS-------------
-insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '1', 'Emilija','Tomovic', '018/789-654', 'emilija@gmail.com', 'emili');
+insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '1', 'Emilija','Tomovic', '018/789-654', 'emilijat@gmail.com', 'emili');
 insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '2', 'Petra','Petrovic', '018/789-654', 'petra@gmail.com', 'pet');
 insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '3', 'Brankica','Brankic', '018/789-654', 'branka@gmail.com', 'bran');
 insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school1', '4', 'Marko','Maric', '018/789-654', 'marko@gmail.com', 'mar');
