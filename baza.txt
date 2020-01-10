@@ -34,7 +34,8 @@ CREATE TABLE "Section" (
 	"teacherID" text,
 	"schoolID" text,
 	num_stud varint,
-	PRIMARY KEY("name", "teacherID","schoolID")
+	opinions map<text, text>,
+	PRIMARY KEY("name", "schoolID", "teacherID")
 );
 ---------SCHOOLS-------------
 insert into "School"("schoolID", name, phone, email, city, address, zip)  values ('school1', 'Gimnazija Stevan Sremac', '018/735-412','gss@gmail.com', 'Nis', 'Ulica Vozda Karadjordja', 18000);
@@ -61,26 +62,26 @@ insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, pass
 insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '19', 'Stanko','Stanic', '018/789-654', 'stanko@gmail.com', 'stan');
 insert into "Teacher"("schoolID", "teacherID", name, surname, phone, email, password)  values ('school2', '20', 'Emili','Tomovic', '018/789-654', 'emili@gmail.com', 'emi');
 ---------SECTIONS-------------
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-1','1','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-2','2','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-3','3','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-4','4','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-5','5','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-1','6','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-2','7','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-3','8','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-4','9','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-5','10','school1',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-1','11','school2',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-2','12','school2',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-3','13','school2',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-4','14','school2',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('I-5','15','school2',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-1','16','school2',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-2','17','school2',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-3','18','school2',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-4','19','school2',4);
-insert into "Section"("name", "teacherID", "schoolID", num_stud) values ('II-5','20','school2',4);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-1','1','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-2','2','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-3','3','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-4','4','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-5','5','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-1','6','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-2','7','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-3','8','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-4','9','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-5','10','school1',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-1','11','school2',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-2','12','school2',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-3','13','school2',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-4','14','school2',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('I-5','15','school2',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-1','16','school2',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-2','17','school2',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-3','18','school2',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-4','19','school2',4, null);
+insert into "Section"("name", "teacherID", "schoolID", num_stud, opinions) values ('II-5','20','school2',4, null);
 ---------STUDENTS-------------
 insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('1','I-1', '1', 'Ana', 'Anic','ana@gmail.com', 'a', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});
 insert into "Student"("studentID", "sectionID", "teacherID", name, surname, email, password, grades) values ('2','I-1', '1', 'Filip', 'Filipovic','filip@gmail.com', 'fil', {'Srpski': '5,4', 'Engleski': '4,5,5','Matematika': '3,5','Istorija':'4,4','Geografija':'2,5','Biologija':'5,1','Informatika':'5,5'});

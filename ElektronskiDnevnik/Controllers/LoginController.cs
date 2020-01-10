@@ -47,6 +47,7 @@ namespace ElektronskiDnevnik.Controllers
                     u.surname = student.surname;
                     u.sectionID = student.sectionID;
                     u.teacherID = student.teacherID;
+                    student.averageGrade = CassandraDataLayer.DataProvider.GetAverageStudentGrade(student);
                     CassandraDataLayer.Store.GetInstance().SetUser(u);
                     return Redirect("~/Home");
                 }

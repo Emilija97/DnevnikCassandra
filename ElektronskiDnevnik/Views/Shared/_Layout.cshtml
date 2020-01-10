@@ -35,6 +35,10 @@
                         {
                             <li>@Html.ActionLink("See student page", "Index", "Student", new { area = "" }, null)</li>
                         }
+                        else
+                        {
+                            <li>@Html.ActionLink("Sections opinions", "Opinions", "Teacher", new { area = "" }, null)</li>
+                        }
                     }
                 </ul>
             </div>

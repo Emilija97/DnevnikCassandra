@@ -34,5 +34,7 @@ namespace CassandraDataLayer.QueryEntities
 
         public string subject { get; set; }
         public string grade { get; set; }
+
+        public float averageGrade { get; set; }
     }
 }

@@ -45,5 +45,39 @@ namespace ElektronskiDnevnik.Controllers
             CassandraDataLayer.DataProvider.ChangeNumStud(sectionID, u.userID, u.schoolID, -1);
             return RedirectToAction("Teacher", "Teacher");
         }
+        public ActionResult AddSection()
+        {
+            return View("AddSection");
+        }
+        [HttpPost]
+        public ActionResult AddSection(CassandraDataLayer.QueryEntities.Section s)
+        {
+            s.schoolID = Guid.NewGuid().ToString("N");
+            CassandraDataLayer.DataProvider.AddSection(s);
+            return View();
+        }
+        public ActionResult AddSchool()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddSchool(CassandraDataLayer.QueryEntities.School s)
+        {
+            s.schoolID = Guid.NewGuid().ToString("N");
+            CassandraDataLayer.DataProvider.AddSchool(s);
+            return View();
+        }
+
+        public ActionResult Opinions()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Opinions(CassandraDataLayer.QueryEntities.Section section)
+        {
+            User u = CassandraDataLayer.Store.GetInstance().GetUser();
+            CassandraDataLayer.DataProvider.AddOpinion(section.name, u.userID, u.schoolID, section.opinion);
+            return View();
+        }
     }
 }

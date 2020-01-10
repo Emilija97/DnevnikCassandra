@@ -5,6 +5,26 @@
     </div>
     <form>
         <i>
+            @if (CassandraDataLayer.Store.GetInstance().loggedUser != null)
+            {
+                CassandraDataLayer.QueryEntities.School school;
+                if (CassandraDataLayer.Store.GetInstance().loggedUser.role)
+                {
+                    school = CassandraDataLayer.DataProvider.GetSchool(CassandraDataLayer.Store.GetInstance().GetUser().schoolID);
+                }
+                else
+                {
+                    school = CassandraDataLayer.DataProvider.GetSchoolStudent(CassandraDataLayer.Store.GetInstance().GetUser());
+                }
+                    <div class="col-md-offset-2 col-md-10" style="display:flex;flex-direction:column;">
+                        <h1 style="font:bold; color:darkblue">Information about school:</h1>
+                        <h2 style="color:darkblue"> School name: @school.name</h2>
+                        <h2 style="color:darkblue"> School email: @school.email</h2>
+                        <h2 style="color:darkblue"> School contact: @school.phone</h2>
+                        <h2 style="color:darkblue"> School address: @school.city @school.address @school.zip</h2>
+                    </div>
+
+            }
             <h3>You can log in like a student or a teacher.</h3>
             <h3>You can register only like a teacher, schoolID is affirmation code.</h3>
             <h4>This portal helps in following student's achievement.</h4>

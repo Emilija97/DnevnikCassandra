@@ -34,6 +34,38 @@ namespace CassandraDataLayer
             return school;
         }
 
+        public static School GetSchoolStudent(User u)
+        {
+            ISession session = SessionManager.GetSession();
+            School school = new School();
+
+            if (session == null)
+                return null;
+
+            Row teacherData = session.Execute("select * from \"Teacher\" where \"teacherID\"='" + u.teacherID + "'").FirstOrDefault();
+
+            string schoolID = "";
+            if (teacherData != null)
+            {
+                schoolID = teacherData["schoolID"].ToString();
+            }
+
+            Row schoolData = session.Execute("select * from \"School\" where \"schoolID\"='" + schoolID + "'").FirstOrDefault();
+
+            if (schoolData != null)
+            {
+                school.schoolID = schoolData["schoolID"] != null ? schoolData["schoolID"].ToString() : string.Empty;
+                school.name = schoolData["name"] != null ? schoolData["name"].ToString() : string.Empty;
+                school.phone = schoolData["phone"] != null ? schoolData["phone"].ToString() : string.Empty;
+                school.email = schoolData["email"] != null ? schoolData["email"].ToString() : string.Empty;
+                school.city = schoolData["city"] != null ? schoolData["city"].ToString() : string.Empty;
+                school.address = schoolData["address"] != null ? schoolData["address"].ToString() : string.Empty;
+                school.zip = schoolData["zip"] != null ? schoolData["zip"].ToString().ToString() : string.Empty;
+            }
+
+            return school;
+        }
+
         public static List<School> GetSchools()
         {
             ISession session = SessionManager.GetSession();
@@ -72,7 +104,7 @@ namespace CassandraDataLayer
                 return;
 
             RowSet schoolData = session.Execute("insert into \"School\" (\"schoolID\", name, phone, email, city, address, zip)  " +
-                "values ('" + s.schoolID + "', '" + s.name + "', '" + s.phone + "', '" + s.email + "', '" + s.city + "', '" + s.address + "', '" + s.zip + "')");
+                "values ('" + s.schoolID + "', '" + s.name + "', '" + s.phone + "', '" + s.email + "', '" + s.city + "', '" + s.address + "', " + s.zip + ")");
 
         }
 
@@ -210,7 +242,53 @@ namespace CassandraDataLayer
         #endregion
 
         #region Student
+        public static float GetAverageStudentGrade(Student student)
+        {
+            ISession session = SessionManager.GetSession();
+            int count = 0;
+            int countAv = 0;
+            float avgSubject = 0;
+            Row studentData = session.Execute("select * from \"Student\" where \"studentID\" = '" + student.studentID + "' and \"sectionID\" = '" + student.sectionID + "' and \"teacherID\" = '" + student.teacherID + "'").FirstOrDefault();
 
+            if (studentData != null)
+            {
+                student.grades = (SortedDictionary<string, string>)studentData["grades"] != null ? (SortedDictionary<string, string>)studentData["grades"] : new SortedDictionary<string, string>();
+                count = student.grades.Count;
+                foreach (var grade in student.grades)
+                {
+                    var numbers = grade.Value.Split(',').Select(Int32.Parse).ToList();
+                    countAv = numbers.Count;
+                    foreach (var numb in numbers)
+                    {
+                        avgSubject += numb;
+                    }
+                    student.averageGrade += getAverage(avgSubject / countAv);
+                    //student.averageGrade += avgSubject / countAv;
+                    countAv = 0;
+                    avgSubject = 0;
+                }
+                student.averageGrade /= count;
+            }
+
+            return student.averageGrade;
+        }
+
+        public static float GetAverageGrade(string grades)
+        {
+            float avg = 0;
+            int countAv = 0;
+            float avgSubject = 0;
+
+            var numbers = grades.Split(',').Select(Int32.Parse).ToList();
+            countAv = numbers.Count;
+            foreach (var numb in numbers)
+            {
+                avgSubject += numb;
+            }
+            avg = avgSubject / countAv;
+
+            return avg;
+        }
         public static Student GetStudent(string studentID, string sectionID, string teacherID)
         {
             ISession session = SessionManager.GetSession();
@@ -218,7 +296,6 @@ namespace CassandraDataLayer
 
             if (session == null)
                 return null;
-
             Row studentData = session.Execute("select * from \"Student\" where \"studentID\" = '" + studentID + "' and \"sectionID\" = '" + sectionID + "' and \"teacherID\" = '" + teacherID + "'").FirstOrDefault();
 
             if (studentData != null)
@@ -231,6 +308,7 @@ namespace CassandraDataLayer
                 student.email = studentData["email"] != null ? studentData["email"].ToString() : string.Empty;
                 student.password = studentData["password"] != null ? studentData["password"].ToString() : string.Empty;
                 student.grades = (SortedDictionary<string, string>)studentData["grades"] != null ? (SortedDictionary<string, string>)studentData["grades"] : new SortedDictionary<string, string>();
+                student.averageGrade = GetAverageStudentGrade(student);
             }
 
             return student;
@@ -366,7 +444,7 @@ namespace CassandraDataLayer
             if (session == null)
                 return;
             string g = "";
-            if (s.grades != null)
+            if (s.grades.Count != 0)
             {
                 SortedDictionary<string, string> tmp = s.grades;
 
@@ -383,7 +461,8 @@ namespace CassandraDataLayer
                         g += "'" + keyy + "':'" + val + "'";
                         counter = false;
                     }
-                    g += ", '" + keyy + "':'" + val + "'";
+                    else
+                    { g += ", '" + keyy + "':'" + val + "'"; }
                 }
                 g += ", '" + s.subject + "':'" + s.grade + "'";
             }
@@ -415,9 +494,56 @@ namespace CassandraDataLayer
                 section.teacherID = sectionData["teacherID"] != null ? sectionData["teacherID"].ToString() : string.Empty;
                 section.num_stud = sectionData["num_stud"] != null ? Int32.Parse(sectionData["num_stud"].ToString()) : 0;
                 section.name = sectionData["name"] != null ? sectionData["name"].ToString() : string.Empty;
+                section.opinions = (SortedDictionary<string, string>)sectionData["opinions"] != null ? (SortedDictionary<string, string>)sectionData["opinions"] : new SortedDictionary<string, string>();
             }
 
             return section;
+        }
+
+        public static void AddOpinion(string name, string teacherID, string schoolID, string opinion)
+        {
+            ISession session = SessionManager.GetSession();
+            Section section = new Section();
+
+            if (session == null)
+                return;
+
+            var sectionsData = session.Execute("select * from \"Section\" where \"name\" = '" + name + "' and \"schoolID\"='" + schoolID + "' allow filtering");
+            foreach (Row sectionData in sectionsData)
+            {
+                section.teacherID = sectionData["teacherID"] != null ? sectionData["teacherID"].ToString() : string.Empty;
+                section.opinions = (SortedDictionary<string, string>)sectionData["opinions"] != null ? (SortedDictionary<string, string>)sectionData["opinions"] : new SortedDictionary<string, string>();
+            }
+            string o = "";
+            if (section.opinions.Count != 0)
+            {
+                SortedDictionary<string, string> tmp = section.opinions;
+
+                string keyy = "";
+                string val = "";
+                bool counter = true;
+
+                foreach (var op in tmp)
+                {
+                    keyy = op.Key;
+                    val = op.Value;
+                    if (counter)
+                    {
+                        o += "'" + keyy + "':'" + val + "'";
+                        counter = false;
+                    }
+                    else
+                    { o += ", '" + keyy + "':'" + val + "'"; }
+                }
+                o += ", '" + teacherID + "':'" + opinion + "'";
+            }
+            else
+            {
+                o += "'" + teacherID + "':'" + opinion + "'";
+            }
+
+            session.Execute("update \"Section\" set opinions={" + o + "} where \"name\"='" + name + "' and \"schoolID\" = '" + schoolID + "' and \"teacherID\"='" + section.teacherID + "'");
+
         }
 
         public static List<Section> GetSections()
@@ -438,6 +564,7 @@ namespace CassandraDataLayer
                 section.teacherID = sectionData["teacherID"] != null ? sectionData["teacherID"].ToString() : string.Empty;
                 section.num_stud = sectionData["num_stud"] != null ? Int32.Parse(sectionData["num_stud"].ToString()) : 0;
                 section.name = sectionData["name"] != null ? sectionData["name"].ToString() : string.Empty;
+                section.opinions = (SortedDictionary<string, string>)sectionData["opinions"] != null ? (SortedDictionary<string, string>)sectionData["opinions"] : new SortedDictionary<string, string>();
 
                 sections.Add(section);
             }
@@ -471,7 +598,7 @@ namespace CassandraDataLayer
                 return;
 
             RowSet sectionData = session.Execute("insert into \"Section\"(\"schoolID\", \"teacherID\", num_stud,  \"name\") " +
-                "values ('" + s.schoolID + "', '" + s.teacherID + "', '" + s.num_stud + "', '" + s.name + "')");
+                "values ('" + s.schoolID + "', '" + s.teacherID + "', " + s.num_stud + ", '" + s.name + "')");
 
         }
 
@@ -517,6 +644,19 @@ namespace CassandraDataLayer
                 }
                 return false;
             }
+        }
+        public static int getAverage(float number)
+        {
+            if (number >= 4.5)
+                return 5;
+            else if (number >= 3.5)
+                return 4;
+            else if (number >= 2.5)
+                return 3;
+            else if (number >= 1.5)
+                return 2;
+            else
+                return 1;
         }
 
         #endregion

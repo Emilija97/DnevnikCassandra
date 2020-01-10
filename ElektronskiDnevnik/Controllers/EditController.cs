@@ -21,6 +21,7 @@ namespace ElektronskiDnevnik.Controllers
         public ActionResult Index(CassandraDataLayer.QueryEntities.Student s)
         {
             CassandraDataLayer.DataProvider.EditStudent(s);
+            s.averageGrade = CassandraDataLayer.DataProvider.GetAverageStudentGrade(s);
             return View(s);
         }
     }
