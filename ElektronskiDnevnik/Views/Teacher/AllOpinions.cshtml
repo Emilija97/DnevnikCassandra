@@ -31,7 +31,9 @@
                         foreach (var opinion in item.opinions)
                         {
                             <li style="list-style-type:none">
-                                @opinion.Value
+                                @opinion.Value -
+                                @CassandraDataLayer.DataProvider.GetTeacher(CassandraDataLayer.Store.GetInstance().loggedUser.schoolID, opinion.Key).name
+                                @CassandraDataLayer.DataProvider.GetTeacher(CassandraDataLayer.Store.GetInstance().loggedUser.schoolID, opinion.Key).surname
                             </li>
                         }
                     }
@@ -40,5 +42,5 @@
         }
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Teacher","Teacher")
+    @Html.ActionLink("Back to List", "Teacher", "Teacher")
 </p>

@@ -235,6 +235,7 @@
     <Content Include="Views\Teacher\AddSection.cshtml" />
     <Content Include="Views\Teacher\Opinions.cshtml" />
     <Content Include="Views\Teacher\AllOpinions.cshtml" />
+    <Content Include="Views\Home\SchoolPortal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

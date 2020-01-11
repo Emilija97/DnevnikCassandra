@@ -15,5 +15,12 @@ namespace ElektronskiDnevnik.Controllers
             User u = CassandraDataLayer.Store.GetInstance().GetUser();
             return View(u);
         }
+
+        public ActionResult SchoolPortal()
+        {
+            ViewBag.Title = "Home Page";
+            User u = CassandraDataLayer.Store.GetInstance().GetUser();
+            return View(u);
+        }
     }
 }
