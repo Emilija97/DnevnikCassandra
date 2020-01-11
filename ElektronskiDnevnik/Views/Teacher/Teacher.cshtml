@@ -36,31 +36,31 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.surname)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.email)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.averageGrade)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", "Teacher", new { id = item.studentID, sectionID = item.sectionID }, null) |
-        @Html.ActionLink("Add subject", "AddSubject", "Teacher", new { id = item.studentID, sectionID = item.sectionID }, null) |
-        @Html.ActionLink("Delete", "Delete", "Teacher", new { id = item.studentID, sectionID = item.sectionID }, null)
-    </td>
-</tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.averageGrade)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Teacher", new { id = item.studentID, sectionID = item.sectionID }, null) |
+                @Html.ActionLink("Add subject", "AddSubject", "Teacher", new { id = item.studentID, sectionID = item.sectionID }, null) |
+                @Html.ActionLink("Delete", "Delete", "Teacher", new { id = item.studentID, sectionID = item.sectionID }, null)
+            </td>
+        </tr>
     }
 </table>
 <div class="col-md-offset-2 col-md-10">
     <label>Average grade for all students: @averageSectionGrade</label>
 </div>
-<div class="col-md-offset-0 col-md-10" style="display:flex;flex-direction:row;justify-content:space-between" >
+<div class="col-md-offset-0 col-md-10" style="display:flex;flex-direction:row;justify-content:space-between">
     @Html.ActionLink("Register New Student", "RegisterStudent", "Register", new { area = "" }, null)
     @Html.ActionLink("Add New School", "AddSchool", "Teacher", new { area = "" }, null)
     @Html.ActionLink("Add New Section", "AddSection", "Teacher", new { area = "" }, null)

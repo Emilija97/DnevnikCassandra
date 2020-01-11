@@ -120,6 +120,38 @@ namespace CassandraDataLayer
 
         }
 
+        public static List<Student> GetAllSchoolStudents(string schoolID)
+        {
+            ISession session = SessionManager.GetSession();
+            School school = new School();
+
+            List<Student> students = new List<Student>();
+
+            if (session == null)
+                return null;
+
+            RowSet teachersData = session.Execute("Select * from \"Teacher\" where \"schoolID\" = '" + schoolID + "'ALLOW FILTERING");
+            foreach (var teacherData in teachersData)
+            {
+                RowSet studentsData = session.Execute("Select * from \"Student\" where \"teacherID\" = '" + teacherData["teacherID"] + "' ALLOW FILTERING");
+                foreach (var studentData in studentsData)
+                {
+                    Student student = new Student();
+                    student.studentID = studentData["studentID"] != null ? studentData["studentID"].ToString() : string.Empty;
+                    student.sectionID = studentData["sectionID"] != null ? studentData["sectionID"].ToString() : string.Empty;
+                    student.teacherID = studentData["teacherID"] != null ? studentData["teacherID"].ToString() : string.Empty;
+                    student.name = studentData["name"] != null ? studentData["name"].ToString() : string.Empty;
+                    student.surname = studentData["surname"] != null ? studentData["surname"].ToString() : string.Empty;
+                    student.email = studentData["email"] != null ? studentData["email"].ToString() : string.Empty;
+                    student.password = studentData["password"] != null ? studentData["password"].ToString() : string.Empty;
+                    student.grades = (SortedDictionary<string, string>)studentData["grades"] != null ? (SortedDictionary<string, string>)studentData["grades"] : new SortedDictionary<string, string>();
+                    student.averageGrade = GetAverageStudentGrade(student);
+                    students.Add(student);
+                }
+            }
+            return students;
+        }
+
         #endregion
 
         #region Teacher
@@ -546,7 +578,7 @@ namespace CassandraDataLayer
 
         }
 
-        public static List<Section> GetSections()
+        public static List<Section> GetSections(string schoolID)
         {
             ISession session = SessionManager.GetSession();
             List<Section> sections = new List<Section>();
@@ -554,7 +586,7 @@ namespace CassandraDataLayer
             if (session == null)
                 return null;
 
-            var sectionsData = session.Execute("select * from \"Section\"");
+            var sectionsData = session.Execute("select * from \"Section\" where \"schoolID\" = '"+schoolID+"' allow filtering");
 
 
             foreach (Row sectionData in sectionsData)

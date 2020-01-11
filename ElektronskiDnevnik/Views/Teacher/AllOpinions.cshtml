@@ -1,0 +1,44 @@
+﻿@model IEnumerable<CassandraDataLayer.QueryEntities.Section>
+
+@{
+    ViewBag.Title = "AllOpinions";
+}
+
+<h2>AllOpinions</h2>
+
+<div>
+    <h4>Section</h4>
+    <hr />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayName("Opinions for each")
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @{
+                        string tmp = "";
+                        foreach (var opinion in item.opinions)
+                        {
+                            <li style="list-style-type:none">
+                                @opinion.Value
+                            </li>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Teacher","Teacher")
+</p>

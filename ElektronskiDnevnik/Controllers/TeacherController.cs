@@ -79,5 +79,12 @@ namespace ElektronskiDnevnik.Controllers
             CassandraDataLayer.DataProvider.AddOpinion(section.name, u.userID, u.schoolID, section.opinion);
             return View();
         }
+        public ActionResult AllOpinions()
+        {
+            User u = CassandraDataLayer.Store.GetInstance().GetUser();
+            var sections = new List<Section>();
+            sections = CassandraDataLayer.DataProvider.GetSections(u.schoolID);
+            return View(sections);
+        }
     }
 }
