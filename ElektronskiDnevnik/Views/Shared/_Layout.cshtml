@@ -27,8 +27,6 @@
                 </ul>
                 <ul class=" nav mr-auto navbar-nav">
                     <li>@Html.ActionLink("Register", "RegisterTeacher", "Register", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Login", "Login", "Login", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Login", new { area = "" }, null)</li>
                     @if (CassandraDataLayer.Store.GetInstance().loggedUser != null)
                     {
                         if (!CassandraDataLayer.Store.GetInstance().loggedUser.role)
@@ -38,10 +36,13 @@
                         else
                         {
                             <li>@Html.ActionLink("Sections opinions", "Opinions", "Teacher", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("Check all opinions", "AllOpinions", "Teacher", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Check opinions", "AllOpinions", "Teacher", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Teacher", "Teacher", "Teacher", new { area = "" }, null)</li>
                         }
 
                     }
+                    <li>@Html.ActionLink("Login", "Login", "Login", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Login", new { area = "" }, null)</li>
                 </ul>
             </div>
         </div>

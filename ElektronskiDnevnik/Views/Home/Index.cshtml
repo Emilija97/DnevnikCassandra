@@ -1,38 +1,51 @@
 ﻿@model CassandraDataLayer.QueryEntities.User
-<table class="table">
-    @if (CassandraDataLayer.Store.GetInstance().loggedUser != null)
-    {
-        <h1>All students in the school</h1>
-        <tr>
-            <th>
-                @Html.DisplayName("Name")
-            </th>
-            <th>
-                @Html.DisplayName("Surname")
-            </th>
-            <th>
-                @Html.DisplayName("Email")
-            </th>
-            <th>
-                @Html.DisplayName("Average Grade")
-            </th>
-        </tr>
-        foreach (var s in CassandraDataLayer.DataProvider.GetAllSchoolStudents(CassandraDataLayer.Store.GetInstance().loggedUser.schoolID))
+    <table class="table">
+        @if (CassandraDataLayer.Store.GetInstance().loggedUser != null)
         {
+            if (CassandraDataLayer.Store.GetInstance().loggedUser.role)
+            {
+            <h1>All students in the school</h1>
             <tr>
-                <td>
-                    @s.name
-                </td>
-                <td>
-                    @s.surname
-                </td>
-                <td>
-                    @s.email
-                </td>
-                <td>
-                    @s.averageGrade
-                </td>
+                <th>
+                    @Html.DisplayName("Name")
+                </th>
+                <th>
+                    @Html.DisplayName("Surname")
+                </th>
+                <th>
+                    @Html.DisplayName("Email")
+                </th>
+                <th>
+                    @Html.DisplayName("Average Grade")
+                </th>
             </tr>
+                foreach (var s in CassandraDataLayer.DataProvider.GetAllSchoolStudents(CassandraDataLayer.Store.GetInstance().loggedUser.schoolID))
+                {
+                <tr>
+                    <td>
+                        @s.name
+                    </td>
+                    <td>
+                        @s.surname
+                    </td>
+                    <td>
+                        @s.email
+                    </td>
+                    <td>
+                        @s.averageGrade
+                    </td>
+                </tr>
+                }
+            }
+            else
+            {
+                <h2>You can see all your information in the student page</h2>
+            }
         }
-    }
-</table>
+        else
+        {
+            <h3>You can log in like a student or a teacher.</h3>
+            <h3>You can register only like a teacher, schoolID is affirmation code.</h3>
+            <h4>This portal helps in following student's achievement.</h4>
+        }
+    </table>
